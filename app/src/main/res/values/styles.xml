@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PlainButton" parent="android:Widget.Button">
+        <item name="backgroundTint">@null</item>
+        <item name="background">@null</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="PlainMaterialButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@null</item>
+        <item name="background">@null</item>
+    </style>
+
+</resources>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CookBook</string>
+    <string name="calories_format">Calories: %d</string>
+    <string name="rating_format">Rating: %.1f</string>
+    <string name="no_recipes_found">No recipes found. Try different ingredients.</string>
+    <string name="enter_ingredients">Please enter at least one ingredient</string>
+    <string name="settings_title">Settings</string>
+    <string name="language_button">Language</string>
+    <string name="about_button">About</string>
+    <string name="loading_failed">Failed to load recipes</string>
+    <string name="loading_error">Error loading recipes</string>
+    <string name="display_name">User</string>
+    <string name="name_asc">Name A-Z</string>
+    <string name="name_desc">Name Z-A</string>
+    <string name="calories">Calories</string>
+    <string name="rating">Rating</string>
+    <string name="category">Category</string>
+    <string name="step_text">Step </string>
+    <string name="image_fail_save">Failed to save image</string>
+    <string name="no_username">No username</string>
+    <string name="title_logout">Logout</string>
+    <string name="text_logout">Are you sure you want to logout?</string>
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+    <string name="loading_recipes">Loading recipes</string>
+    <string name="no_recipes_home">No recipes found</string>
+    <string name="change_password_title">Change password</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="fill_password_field">Fill both fields</string>
+    <string name="length_password">New password needs to have at least 6 characters</string>
+    <string name="error_account">Account error</string>
+    <string name="update_password">Password updated successfully</string>
+    <string name="error_password">Error updating password</string>
+    <string name="incorrect_password">Old password is incorrect</string>
+    <string name="title_cancel">Cancel</string>
+    <string name="change_username">Change username</string>
+    <string name="new_username">New username</string>
+    <string name="text_confirm">Confirm</string>
+    <string name="invalid_username">Enter a valid username</string>
+    <string name="successful_username_update">Username successfully updated!</string>
+    <string name="error_username">Error updating username.</string>
+    <string name="text_calories">Calorie:</string>
+    <string name="text_rating">Rating:</string>
+    <string name="unknown_recipe">Unknown recipe</string>
+    <string name="error_recipeid">Error: RecipeId not found!</string>
+    <string name="error_ingredient">Please enter at least one ingredient</string>
+    <string name="error_searching">Error occurred while searching</string>
+    <string name="delete_confirm">Delete confirmation</string>
+    <string name="text_delete_recipe">Are you sure you want to delete this recipe?</string>
+    <string name="deleted_recipe">Recipe has been deleted</string>
+    <string name="text_upload_fail">Image upload failed</string>
+    <string name="text_field_fill">Please fill in the required fields</string>
+    <string name="text_recipe_saved">Recipe saved</string>
+    <string name="text_enter_email">Enter your email</string>
+    <string name="text_enter_password">Enter your password</string>
+    <string name="text_login_success">Login successful</string>
+    <string name="text_login_fail">Login failed:</string>
+    <string name="text_reset_password">Enter your email to reset password</string>
+    <string name="text_email_sent">Password reset email sent!</string>
+    <string name="text_error">Error:</string>
+    <string name="text_password_mismatch">Passwords do not match</string>
+    <string name="text_enter_username">Enter username</string>
+    <string name="text_registration_success">Registration successful!</string>
+    <string name="text_error_username">Error saving username.</string>
+    <string name="text_invalid_user">Invalid user. Please try again.</string>
+    <string name="about_title">About CookBook</string>
+    <string name="about_message">
+        CookBook
+\n
+      \n  An app to help you cook delicious meals with step-by-step instructions.
+\n
+     \n   Made with love ❤️ by Vedad
+\n
+    </string>
+    <string name="text_bosnian">Bosnian</string>
+    <string name="text_english">English</string>
+    <string name="title_choose_language">Choose the language</string>
+
+    <!--XML-->
+    <string name="select_image">Select Image</string>
+    <string name="recipe_name_hint">Recipe Name</string>
+    <string name="ingredients_hint">Ingredients (e.g. sugar, flour, eggs)</string>
+    <string name="calories_hint">Calories</string>
+    <string name="category_hint">Category</string>
+    <string name="rating_label">Rating:</string>
+    <string name="steps_title">Preparation Steps</string>
+    <string name="add_step">Add Step</string>
+    <string name="save_recipe">Save Recipe</string>
+    <string name="delete_recipe">Delete Recipe</string>
+    <string name="image_desc">Recipe Image</string>
+    <string name="welcome">Welcome!</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Log In</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="register">Don\'t have an account? Register</string>
+    <string name="username">Username</string>
+    <string name="change">Change</string>
+    <string name="logout">Log Out</string>
+    <string name="recipe_title">Recipe Title</string>
+    <string name="favorite">Favorite</string>
+    <string name="edit_recipe">Edit Recipe</string>
+    <string name="star">Star</string>
+    <string name="calories_label">Calories:</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="text_register">Register</string>
+    <string name="registration">Register</string>
+    <string name="about">About App</string>
+    <string name="language">Language</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="favorites_title">Favorites</string>
+    <string name="favorites_empty">No favorites yet</string>
+    <string name="history_empty">No recently viewed recipes</string>
+    <string name="profile">Profile</string>
+    <string name="options">Options</string>
+    <string name="search_hint">Search recipes...</string>
+    <string name="view_toggle">View toggle</string>
+    <string name="collapse">Collapse</string>
+    <string name="add_recipe">Add Recipe</string>
+    <string name="ingredients_have">What do you have?</string>
+    <string name="add_ingredients_have">Add ingredients you have</string>
+    <string name="ingredients_missing">What are you missing?</string>
+    <string name="add_ingredients_missing">Add ingredients you don\'t have</string>
+    <string name="results_label">Results</string>
+    <string name="step_label">Step 1</string>
+    <string name="step_description_hint">Step description</string>
+    <string name="step_image_desc">Step image</string>
+    <string name="add_image">Add Image</string>
+    <string name="delete">Delete</string>
+    <string name="step_description_sample">Description of the step goes here.</string>
+    <string name="recipe_image_desc">Recipe Image</string>
+    <string name="favorite_icon_desc">Favorite Icon</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_history">History</string>
+    <string name="nav_profile">Profile</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="text_okay">Okay</string>
+
+
+    <!--<string name=""></string>-->
+    <!--getString(R.string.)-->
+</resources>

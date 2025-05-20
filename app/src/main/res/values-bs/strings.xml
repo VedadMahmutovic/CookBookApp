@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CookBook</string>
+    <string name="calories_format">Kalorije: %d</string>
+    <string name="rating_format">Ocjena: %.1f</string>
+    <string name="no_recipes_found">Nema recepata. Pokušajte s drugim sastojcima.</string>
+    <string name="enter_ingredients">Unesite barem jedan sastojak</string>
+    <string name="settings_title">Postavke</string>
+    <string name="language_button">Jezik</string>
+    <string name="about_button">O aplikaciji</string>
+    <string name="text_no">Ne</string>
+    <string name="loading_recipes">Učitavanje recepata</string>
+    <string name="no_recipes_home">Recepti nisu pronađeni</string>
+    <string name="category">Kategorija</string>
+    <string name="step_text">Korak </string>
+    <string name="loading_failed">Recepti nisu učitani</string>
+    <string name="loading_error">Greška pri učitavanju recepata</string>
+    <string name="display_name">Korisnik</string>
+    <string name="name_asc">Ime A-Z</string>
+    <string name="name_desc">Ime Z-A</string>
+    <string name="calories">Kalorije</string>
+    <string name="rating">Ocjena</string>
+    <string name="image_fail_save">Slika nije sačuvana</string>
+    <string name="no_username">Nema korisničkog imena</string>
+    <string name="title_logout">Odjava</string>
+    <string name="text_logout">Da li ste sigurni da želite da se odjavite?</string>
+    <string name="text_yes">Da</string>
+    <string name="change_password_title">Promjeni šifru</string>
+    <string name="button_confirm">Potvrdi</string>
+    <string name="fill_password_field">Popunite oba polja</string>
+    <string name="length_password">Nova lozinka mora imati najmanje 6 karaktera</string>
+    <string name="error_account">Greška sa nalogom</string>
+    <string name="update_password">Lozinka uspješno ažurirana</string>
+    <string name="error_password">Greška pri ažuriranju lozinke</string>
+    <string name="incorrect_password">Stara lozinka nije tačna</string>
+    <string name="title_cancel">Otkaži</string>
+    <string name="change_username">Promijeni username</string>
+    <string name="new_username">Novi username</string>
+    <string name="text_confirm">Potvrdi</string>
+    <string name="invalid_username">Unesite validan username</string>
+    <string name="successful_username_update">Username uspješno ažuriran!</string>
+    <string name="error_username">Greška pri ažuriranju username-a</string>
+    <string name="text_calories">Kalorije:</string>
+    <string name="text_rating">Ocjena:</string>
+    <string name="unknown_recipe">Nepoznat recept</string>
+    <string name="error_recipeid">Greška: RecipeId nije pronađen!</string>
+    <string name="error_ingredient">Unesite barem jedan sastojak</string>
+    <string name="error_searching">Došlo je do greške pri pretrazi</string>
+    <string name="delete_confirm">Potvrda brisanja</string>
+    <string name="text_delete_recipe">Da li ste sigurni da želite obrisati ovaj recept?</string>
+    <string name="deleted_recipe">Recept obrisan</string>
+    <string name="text_upload_fail">Neuspješno učitavanje slike</string>
+    <string name="text_field_fill">Popunite obavezna polja</string>
+    <string name="text_recipe_saved">Recept spremljen</string>
+    <string name="text_enter_email">Unesite email</string>
+    <string name="text_enter_password">Unesite lozinku</string>
+    <string name="text_login_success">Prijava uspješna</string>
+    <string name="text_login_fail">Neuspješna prijava:</string>
+    <string name="text_reset_password">Unesite email za reset lozinke</string>
+    <string name="text_email_sent">Email za reset lozinke je poslan!</string>
+    <string name="text_error">Greška:</string>
+    <string name="text_password_mismatch">Lozinke se ne poklapaju</string>
+    <string name="text_enter_username">Unesite korisničko ime</string>
+    <string name="text_registration_success">Registracija uspješna!</string>
+    <string name="text_error_username">Greška pri spremanju korisničkog imena.</string>
+    <string name="text_invalid_user">Korisnik nije validan. Pokušajte ponovo.</string>
+    <string name="about_title">O aplikaciji CookBook</string>
+    <string name="about_message">
+        CookBook
+\n
+       \n Vaš lični pomoćnik u kuhinji! Ova aplikacija vam pomaže da pripremite ukusna jela uz jasne i jednostavne korake.
+\n
+     \n   Razvijeno s ljubavlju ❤️ od strane Vedada
+\n
+    </string>
+    <string name="text_bosnian">Bosanski</string>
+    <string name="text_english">Engleski</string>
+    <string name="title_choose_language">Izaberi jezik</string>
+
+    <!--XML-->
+    <string name="select_image">Odaberi sliku</string>
+    <string name="recipe_name_hint">Naziv recepta</string>
+    <string name="ingredients_hint">Sastojci (npr: šećer, brašno, jaja)</string>
+    <string name="calories_hint">Kalorije</string>
+    <string name="category_hint">Kategorija</string>
+    <string name="rating_label">Ocjena:</string>
+    <string name="steps_title">Koraci pripreme</string>
+    <string name="add_step">Dodaj korak</string>
+    <string name="save_recipe">Spremi recept</string>
+    <string name="delete_recipe">Obriši recept</string>
+    <string name="image_desc">Slika recepta</string>
+    <string name="welcome">Dobrodošli!</string>
+    <string name="email">Email</string>
+    <string name="password">Lozinka</string>
+    <string name="login">Prijavi se</string>
+    <string name="forgot_password">Zaboravili ste lozinku?</string>
+    <string name="register">Nemate račun? Registrujte se</string>
+    <string name="username">Korisničko ime</string>
+    <string name="change">Promijeni</string>
+    <string name="logout">Odjavi se</string>
+    <string name="recipe_title">Naziv recepta</string>
+    <string name="favorite">Omiljeni</string>
+    <string name="edit_recipe">Uredi recept</string>
+    <string name="star">Zvjezdica</string>
+    <string name="calories_label">Kalorije:</string>
+    <string name="confirm_password">Potvrdi lozinku</string>
+    <string name="text_register">Registruj se</string>
+    <string name="registration">Registracija</string>
+    <string name="about">O aplikaciji</string>
+    <string name="language">Jezik</string>
+    <string name="old_password">Stara lozinka</string>
+    <string name="new_password">Nova lozinka</string>
+    <string name="favorites_title">Omiljeni</string>
+    <string name="favorites_empty">Još uvijek nema omiljenih</string>
+    <string name="history_empty">Nema nedavno pregledanih recepata</string>
+    <string name="profile">Profil</string>
+    <string name="options">Opcije</string>
+    <string name="search_hint">Pretraži recepte...</string>
+    <string name="view_toggle">Prikaz</string>
+    <string name="collapse">Sažmi</string>
+    <string name="add_recipe">Dodaj recept</string>
+    <string name="ingredients_have">Šta imate?</string>
+    <string name="add_ingredients_have">Dodajte sastojke koje imate</string>
+    <string name="ingredients_missing">Šta vam nedostaje?</string>
+    <string name="add_ingredients_missing">Dodajte sastojke koje nemate</string>
+    <string name="results_label">Rezultati</string>
+    <string name="step_label">Korak 1</string>
+    <string name="step_description_hint">Opis koraka</string>
+    <string name="step_image_desc">Slika koraka</string>
+    <string name="add_image">Dodaj sliku</string>
+    <string name="delete">Obriši</string>
+    <string name="step_description_sample">Opis ovog koraka ide ovdje.</string>
+    <string name="recipe_image_desc">Slika recepta</string>
+    <string name="favorite_icon_desc">Ikonica omiljenog</string>
+    <string name="nav_search">Pretraga</string>
+    <string name="nav_favorites">Omiljeni</string>
+    <string name="nav_home">Početna</string>
+    <string name="nav_history">Historija</string>
+    <string name="nav_profile">Profil</string>
+    <string name="dark_mode">Mračna Tema</string>
+    <string name="text_okay">Uredu</string>
+
+</resources>
