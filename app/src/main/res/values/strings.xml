@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CookBook</string>
+    <string name="app_name">Slastify</string>
     <string name="calories_format">Calories: %d</string>
     <string name="rating_format">Rating: %.1f</string>
     <string name="no_recipes_found">No recipes found. Try different ingredients.</string>

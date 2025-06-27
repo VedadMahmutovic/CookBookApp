@@ -52,8 +52,13 @@ public class LoginActivity extends AppCompatActivity {
         registerTextView.setOnClickListener(v -> openRegisterScreen());
 
         FrameLayout overlayContainer = findViewById(R.id.decorOverlayContainer);
-        View decorView = getLayoutInflater().inflate(R.layout.layout_decor_sipaj, overlayContainer, false);
-        overlayContainer.addView(decorView);
+        overlayContainer.post(() -> {
+            View decorView = getLayoutInflater().inflate(R.layout.layout_decor_sipaj_login, overlayContainer, false);
+            overlayContainer.setElevation(100f);
+            decorView.setElevation(100f);
+            overlayContainer.addView(decorView);
+        });
+
 
         ImageView flagBosnia = findViewById(R.id.flag_bosnia);
         ImageView flagUSA = findViewById(R.id.flag_usa);

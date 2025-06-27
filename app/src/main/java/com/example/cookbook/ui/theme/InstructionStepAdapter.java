@@ -113,4 +113,10 @@ public class InstructionStepAdapter extends RecyclerView.Adapter<InstructionStep
             progressBar = itemView.findViewById(R.id.progressBarStep);
         }
     }
+
+    public List<InstructionStep> getSteps() {
+        return stepList;
+    }
+
+
 }
