@@ -74,7 +74,13 @@ public interface RecipeDao {
 
     @Query("SELECT * FROM Recipe WHERE id = :id LIMIT 1")
     Recipe getRecipeByIdSync(int id);
+    @Query("SELECT * FROM Recipe ORDER BY name_bs ASC")
+    LiveData<List<Recipe>> getRecipesByNameAscBs();
 
-    /*@Query("SELECT * FROM Recipe WHERE internal_name = :internalName LIMIT 1")
-    Recipe getRecipeByInternalName(String internalName);*/
+    @Query("SELECT * FROM Recipe ORDER BY name_bs DESC")
+    LiveData<List<Recipe>> getRecipesByNameDescBs();
+
+    @Query("SELECT * FROM Recipe ORDER BY category_bs ASC")
+    LiveData<List<Recipe>> getRecipesByCategoryBs();
+
 }

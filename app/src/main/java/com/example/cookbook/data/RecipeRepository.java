@@ -102,24 +102,13 @@ public class RecipeRepository {
         return results;
     }
 
-    public void insert(Recipe recipe) {
-        AppDatabase.databaseWriteExecutor.execute(() -> recipeDao.insert(recipe));
-    }
 
     public void update(Recipe recipe) {
         AppDatabase.databaseWriteExecutor.execute(() -> recipeDao.update(recipe));
     }
 
-    public void delete(Recipe recipe) {
-        AppDatabase.databaseWriteExecutor.execute(() -> recipeDao.delete(recipe));
-    }
-
     public void updateFavoriteStatus(int recipeId, boolean isFavorite) {
         AppDatabase.databaseWriteExecutor.execute(() -> recipeDao.updateFavoriteStatus(recipeId, isFavorite));
-    }
-
-    public void updateLastViewed(int recipeId, long timestamp) {
-        AppDatabase.databaseWriteExecutor.execute(() -> recipeDao.updateLastViewed(recipeId, timestamp));
     }
 
     public int getRecipeCountSync() {
@@ -145,4 +134,16 @@ public class RecipeRepository {
     public LiveData<List<Recipe>> getRecipesByCategory() {
         return recipeDao.getRecipesByCategory();
     }
+    public LiveData<List<Recipe>> getRecipesByNameAscBs() {
+        return recipeDao.getRecipesByNameAscBs();
+    }
+
+    public LiveData<List<Recipe>> getRecipesByNameDescBs() {
+        return recipeDao.getRecipesByNameDescBs();
+    }
+
+    public LiveData<List<Recipe>> getRecipesByCategoryBs() {
+        return recipeDao.getRecipesByCategoryBs();
+    }
+
 }

@@ -45,20 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
         registerTextView = findViewById(R.id.registerTextView);
 
-
-
         loginButton.setOnClickListener(v -> loginUser());
         forgotPasswordTextView.setOnClickListener(v -> resetPassword());
         registerTextView.setOnClickListener(v -> openRegisterScreen());
-
-        FrameLayout overlayContainer = findViewById(R.id.decorOverlayContainer);
-        overlayContainer.post(() -> {
-            View decorView = getLayoutInflater().inflate(R.layout.layout_decor_sipaj_login, overlayContainer, false);
-            overlayContainer.setElevation(100f);
-            decorView.setElevation(100f);
-            overlayContainer.addView(decorView);
-        });
-
 
         ImageView flagBosnia = findViewById(R.id.flag_bosnia);
         ImageView flagUSA = findViewById(R.id.flag_usa);
@@ -72,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
             LocaleHelper.setLocale(this, "en");
             recreate();
         });
-
     }
 
     private void loginUser() {
@@ -92,11 +80,11 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, getString(R.string.text_login_success), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        Toast.makeText(this, getString(R.string.text_login_success), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, getString(R.string.text_login_fail) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.text_login_fail) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -112,31 +100,20 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, getString(R.string.text_email_sent), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.text_email_sent), Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(LoginActivity.this, getString(R.string.text_error) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.text_error) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
     private void openRegisterScreen() {
-        registerTextView.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
-        });
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase));
     }
-
-    public static Context setLocale(Context context, String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.setLocale(locale);
-        return context.createConfigurationContext(config);
-    }
-
 }

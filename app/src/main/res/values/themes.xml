@@ -8,6 +8,7 @@
         <item name="materialButtonStyle">@style/PlainMaterialButton</item>
 
         <item name="colorPrimary">#775123</item>
+        <item name="colorSecondary">#775123</item>
         <item name="colorPrimaryVariant">#775123</item>
         <item name="colorOnPrimary">#FFFFFF</item>
 

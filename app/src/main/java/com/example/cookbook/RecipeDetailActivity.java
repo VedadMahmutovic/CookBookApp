@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +26,6 @@ import com.example.cookbook.data.AppDatabase;
 import com.example.cookbook.model.ChatMessage;
 import com.example.cookbook.model.InstructionStep;
 import com.example.cookbook.model.Recipe;
-//import com.example.cookbook.ui.theme.AiChatBottomSheet;
 import com.example.cookbook.ui.theme.ChatAdapter;
 import com.example.cookbook.ui.theme.InstructionStepAdapter;
 import com.example.cookbook.utils.ChatMemoryCache;
@@ -56,7 +54,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private ImageButton sendChat;
     private ChatAdapter chatAdapter;
     private List<ChatMessage> chatMessages = new ArrayList<>();
-
 
 
     @Override
@@ -107,30 +104,31 @@ public class RecipeDetailActivity extends AppCompatActivity {
             recyclerViewChat.scrollToPosition(chatMessages.size() - 1);
             inputChat.setText("");
 
+            ChatMessage typing = new ChatMessage("loading", getString(R.string.ai_typing));
+            chatMessages.add(typing);
+            chatAdapter.notifyItemInserted(chatMessages.size() - 1);
+            recyclerViewChat.scrollToPosition(chatMessages.size() - 1);
+
             askAiAboutRecipe(question, new AiResponseRepository.AiCallback() {
                 @Override
                 public void onSuccess(String answer) {
+                    chatMessages.remove(typing);
                     chatMessages.add(new ChatMessage("ai", answer));
-                    chatAdapter.notifyItemInserted(chatMessages.size() - 1);
+                    chatAdapter.notifyDataSetChanged();
                     recyclerViewChat.scrollToPosition(chatMessages.size() - 1);
                     ChatMemoryCache.put(recipe.id, chatMessages);
                 }
 
                 @Override
                 public void onError(String error) {
-                    chatMessages.add(new ChatMessage("ai", "Greška: " + error));
-                    chatAdapter.notifyItemInserted(chatMessages.size() - 1);
+                    chatMessages.remove(typing);
+                    chatMessages.add(new ChatMessage("ai", getString(R.string.ai_error_prefix) + error));
+                    chatAdapter.notifyDataSetChanged();
                     recyclerViewChat.scrollToPosition(chatMessages.size() - 1);
                     ChatMemoryCache.put(recipe.id, chatMessages);
                 }
             });
         });
-
-
-
-
-
-
 
 
         Intent intent = getIntent();
@@ -160,7 +158,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     for (Recipe r : all) {
                         if (r.id == finalRecipeId) {
                             runOnUiThread(() -> {
-                                recipe = r; // ⚠️ obavezno ovdje!
+                                recipe = r;
 
                                 chatMessages = new ArrayList<>(ChatMemoryCache.get(recipe.id));
                                 chatAdapter = new ChatAdapter(chatMessages);
@@ -257,7 +255,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     @Override
@@ -279,6 +276,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         }
     }
+
     private void reloadRecipeDetails(int recipeId) {
         AppDatabase db = AppDatabase.getInstance(getApplicationContext());
 
@@ -312,8 +310,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
 
-
-
     private void toggleChatVisibility() {
         FrameLayout aiChatContainer = findViewById(R.id.aiChatContainer);
         if (aiChatContainer == null) return;
@@ -321,9 +317,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (isChatVisible) {
             Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.chat_hide_to_fab);
             slideDown.setAnimationListener(new Animation.AnimationListener() {
-                @Override public void onAnimationStart(Animation animation) {}
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
 
-                @Override public void onAnimationEnd(Animation animation) {
+                @Override
+                public void onAnimationEnd(Animation animation) {
                     aiChatContainer.setVisibility(View.GONE);
                     isChatVisible = false;
 
@@ -333,7 +332,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     aiChatContainer.setAlpha(1f);
                 }
 
-                @Override public void onAnimationRepeat(Animation animation) {}
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
             });
             aiChatContainer.startAnimation(slideDown);
         } else {
@@ -346,13 +347,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
     private void updateLastViewed(int recipeId) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             long timestamp = System.currentTimeMillis();
@@ -361,7 +355,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     .updateLastViewed(recipeId, timestamp);
         });
     }
-
 
 
     private void loadInstructionSteps(int recipeId) {
@@ -385,48 +378,16 @@ public class RecipeDetailActivity extends AppCompatActivity {
             imageView.setVisibility(View.GONE);
         });
     }
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase));
     }
 
-    private void showAiDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("AI Pomoć");
-
-        final EditText input = new EditText(this);
-        input.setHint("Postavi pitanje o receptu...");
-        builder.setView(input);
-
-        builder.setPositiveButton("Pošalji", (dialog, which) -> {
-            String question = input.getText().toString().trim();
-            if (!question.isEmpty()) {
-                askAiAboutRecipe(question);
-            }
-        });
-
-        builder.setNegativeButton("Otkaži", (dialog, which) -> dialog.cancel());
-
-        builder.show();
-    }
-
-    private void askAiAboutRecipe(String question) {
-        askAiAboutRecipe(question, new AiResponseRepository.AiCallback() {
-            @Override
-            public void onSuccess(String answer) {
-                runOnUiThread(() -> showAiAnswer(answer));
-            }
-
-            @Override
-            public void onError(String error) {
-                runOnUiThread(() -> Toast.makeText(RecipeDetailActivity.this, error, Toast.LENGTH_LONG).show());
-            }
-        });
-    }
 
     private void askAiAboutRecipe(String question, AiResponseRepository.AiCallback callback) {
         if (recipe == null) {
-            callback.onError("Recept nije dostupan.");
+            callback.onError(getString(R.string.ai_recipe_not_available));
             return;
         }
 
@@ -447,17 +408,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         String recipeText = "Naziv: " + title + "\nSastojci:\n" + limitedIngredients + "\nUpute:\n" + instructionsBuilder;
 
         AiResponseRepository aiRepo = new AiResponseRepository();
-        aiRepo.askAi(recipeText, question, callback);
-    }
-
-
-
-    private void showAiAnswer(String answer) {
-        new AlertDialog.Builder(this)
-                .setTitle("AI Odgovor")
-                .setMessage(answer)
-                .setPositiveButton("Zatvori", null)
-                .show();
+        aiRepo.askAi(this, recipeText, question, callback);
     }
 
 }

@@ -1,10 +1,15 @@
 package com.example.cookbook.ui.theme;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +24,20 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.cookbook.LoginActivity;
 import com.example.cookbook.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ProfileFragment extends Fragment {
 
@@ -36,8 +46,29 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
 
+    private ImageView profileImageView;
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+
+
     public ProfileFragment() {
 
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri imageUri = result.getData().getData();
+                        if (imageUri != null) {
+                            uploadProfileImageToFirebase(imageUri);
+                        }
+                    }
+                }
+        );
     }
 
     @Override
@@ -45,15 +76,42 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
         emailTextView = view.findViewById(R.id.emailTextView);
         userIdTextView = view.findViewById(R.id.userIdTextView);
         passwordTextView = view.findViewById(R.id.passwordTextView);
         logoutButton = view.findViewById(R.id.logoutButton);
+
+        profileImageView = view.findViewById(R.id.profileImageView);
+
+        if (firebaseUser.getPhotoUrl() != null) {
+            Glide.with(this)
+                    .load(firebaseUser.getPhotoUrl())
+                    .placeholder(R.drawable.ic_profile)
+                    .into(profileImageView);
+        }
+
+        profileImageView.setOnClickListener(v -> openImagePicker());
+
+        String localUrl = requireContext().getSharedPreferences("profile", Context.MODE_PRIVATE)
+                .getString("profile_pic_url", null);
+        if (localUrl != null) {
+            Glide.with(this)
+                    .load(Uri.parse(localUrl))
+                    .placeholder(R.drawable.ic_profile)
+                    .error(R.drawable.ic_profile)
+                    .circleCrop()
+                    .into(profileImageView);
+        }
+
+
+
         changeUsernameButton = view.findViewById(R.id.changeUsernameButton);
         changePasswordButton = view.findViewById(R.id.changePasswordButton);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
+
 
         if (firebaseUser != null) {
             emailTextView.setText(firebaseUser.getEmail());
@@ -71,6 +129,7 @@ public class ProfileFragment extends Fragment {
         decorOverlayContainer.addView(decor);
 
         return view;
+
     }
 
     private void showLogoutConfirmation() {
@@ -142,6 +201,58 @@ public class ProfileFragment extends Fragment {
 
         dialog.show();
     }
+
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        imagePickerLauncher.launch(intent);
+    }
+
+    private void uploadProfileImageToFirebase(Uri imageUri) {
+        Glide.with(this)
+                .load(imageUri)
+                .placeholder(R.drawable.ic_profile)
+                .error(R.drawable.ic_profile)
+                .circleCrop()
+                .into(profileImageView);
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference()
+                .child("profileImages/" + firebaseUser.getUid() + ".jpg");
+
+        storageRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setPhotoUri(uri)
+                            .build();
+
+                    firebaseUser.updateProfile(profileUpdates)
+                            .addOnCompleteListener(task -> {
+                                if (!isAdded()) return;
+
+                                if (task.isSuccessful()) {
+                                    Glide.with(this)
+                                            .load(uri)
+                                            .placeholder(R.drawable.ic_profile)
+                                            .error(R.drawable.ic_profile)
+                                            .circleCrop()
+                                            .into(profileImageView);
+
+                                    SharedPreferences.Editor editor = requireContext()
+                                            .getSharedPreferences("profile", Context.MODE_PRIVATE).edit();
+                                    editor.putString("profile_pic_url", uri.toString());
+                                    editor.apply();
+
+                                    Toast.makeText(requireContext(), "Profilna ažurirana", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }))
+                .addOnFailureListener(e -> {
+                    if (!isAdded()) return;
+                    Toast.makeText(requireContext(), "Greška prilikom uploada", Toast.LENGTH_SHORT).show();
+                });
+    }
+
 
 
     private void showChangePasswordDialog() {

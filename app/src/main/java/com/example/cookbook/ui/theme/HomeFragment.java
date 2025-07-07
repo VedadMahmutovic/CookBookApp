@@ -3,6 +3,7 @@ package com.example.cookbook.ui.theme;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.cookbook.AddEditRecipeActivity;
 import com.example.cookbook.R;
 import com.example.cookbook.SettingsActivity;
@@ -64,11 +66,6 @@ public class HomeFragment extends Fragment {
     private boolean isCollapsed = false;
     private ViewGroup rootLayout;
     private FloatingActionButton fabAddRecipe;
-
-
-
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -149,9 +146,36 @@ public class HomeFragment extends Fragment {
     private void setupUserProfile() {
         updateUsername();
 
-        usernameText.setOnClickListener(v -> navigateToProfileFragment());
+        Uri photoUri = null;
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null && user.getPhotoUrl() != null) {
+            photoUri = user.getPhotoUrl();
+        } else {
+            SharedPreferences prefs = requireContext().getSharedPreferences("profile", Context.MODE_PRIVATE);
+            String localUrl = prefs.getString("profile_pic_url", null);
+            if (localUrl != null && !localUrl.trim().isEmpty() && !"null".equals(localUrl)) {
+                photoUri = Uri.parse(localUrl);
+            }
+        }
+
+        if (photoUri != null) {
+            Glide.with(this)
+                    .load(photoUri)
+                    .placeholder(R.drawable.ic_profile)
+                    .error(R.drawable.ic_profile)
+                    .circleCrop()
+                    .into(profileIcon);
+        } else {
+            profileIcon.setImageResource(R.drawable.ic_profile);
+        }
+
         profileIcon.setOnClickListener(v -> navigateToProfileFragment());
+        usernameText.setOnClickListener(v -> navigateToProfileFragment());
     }
+
+
+
 
     private void setupRecyclerView() {
         RecyclerView recyclerView = requireView().findViewById(R.id.recipeRecyclerView);
@@ -203,30 +227,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-    private void initializeDatabase() {
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            try {
-                new DatabaseInitializer(requireContext()).insertInitialData();
-
-                // Verify data was inserted
-                int count = repository.getRecipeCountSync();
-                Log.d(TAG, "Database initialized with " + count + " recipes");
-
-                // Update UI on main thread
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    if (count == 0) {
-                        Toast.makeText(getContext(), getString(R.string.loading_failed), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } catch (Exception e) {
-                Log.e(TAG, "Database initialization failed", e);
-                new Handler(Looper.getMainLooper()).post(() ->
-                        Toast.makeText(getContext(), getString(R.string.loading_error), Toast.LENGTH_SHORT).show());
-            }
-        });
-    }
-
     private void searchRecipes(String query) {
         if (query.isEmpty()) {
             repository.getAllRecipes().observe(getViewLifecycleOwner(), recipes ->
@@ -267,7 +267,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateUsername();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            user.reload().addOnCompleteListener(task -> {
+                updateUsername();
+                setupUserProfile();
+            });
+        }
     }
 
     private void setupViewModel() {
@@ -282,28 +288,40 @@ public class HomeFragment extends Fragment {
         sortSpinner.setAdapter(spinnerAdapter);
 
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String lang = java.util.Locale.getDefault().getLanguage();
                 String key = "";
-                switch (position) {
-                    case 0: key = "name_asc"; break;
-                    case 1: key = "name_desc"; break;
-                    case 2: key = "calories"; break;
-                    case 3: key = "rating"; break;
-                    case 4: key = "category"; break;
-                }
 
+                switch (position) {
+                    case 0:
+                        key = lang.equals("bs") ? "name_bs_asc" : "name_en_asc";
+                        break;
+                    case 1:
+                        key = lang.equals("bs") ? "name_bs_desc" : "name_en_desc";
+                        break;
+                    case 2:
+                        key = "calories";
+                        break;
+                    case 3:
+                        key = "rating";
+                        break;
+                    case 4:
+                        key = lang.equals("bs") ? "category_bs" : "category_en";
+                        break;
+                }
 
                 if (!key.isEmpty()) {
                     recipeViewModel.getSortedRecipes(key).observe(getViewLifecycleOwner(), recipes -> {
-                        if (recipes != null) {
-                            adapter.setRecipes(recipes);
-                        }
+                        if (recipes != null) adapter.setRecipes(recipes);
                     });
                 }
             }
 
-            @Override public void onNothingSelected(AdapterView<?> parent) {}
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
+
     }
 
     private void setupToggleView() {

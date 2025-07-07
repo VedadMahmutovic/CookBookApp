@@ -17,9 +17,13 @@
         android:textSize="16sp" />
 
     <ImageView
+        android:id="@+id/avatarImage"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
         android:src="@drawable/ic_profile"
-        android:contentDescription="User" />
+        android:contentDescription="User"
+        android:scaleType="centerCrop"
+
+        android:clipToOutline="true" />
 </LinearLayout>

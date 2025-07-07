@@ -6,13 +6,20 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_bg">
 
-    <FrameLayout
-        android:id="@+id/decorOverlayContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="top"
+    <ImageView
+        android:id="@+id/decorImage"
+        android:layout_width="285dp"
+        android:layout_height="172dp"
+        android:src="@drawable/sipaj"
+        android:scaleType="fitStart"
+        android:contentDescription="@null"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="-48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/registerCard"
         android:translationZ="100dp" />
     <androidx.cardview.widget.CardView
+        android:id="@+id/registerCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="24dp"

@@ -159,6 +159,18 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_profile"
+                android:background="@drawable/background_bottom_nav"
+                android:clickable="true"
+                android:focusable="true" />
+
+
             <Button
                 android:id="@+id/logoutButton"
                 android:layout_width="match_parent"

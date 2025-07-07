@@ -139,5 +139,14 @@
     <string name="nav_profile">Profil</string>
     <string name="dark_mode">Mračna Tema</string>
     <string name="text_okay">Uredu</string>
+    <string name="ai_prompt">Ti si iskusni kuhar koji pomaže korisniku da bolje razumije recepte za deserte. Odgovaraj kratko i jasno na bosanskom jeziku (ijekavica). Ako korisnik traži recept, napiši ga strukturirano s naslovom, sastojcima i koracima.
+</string>
+    <string name="ai_error_prefix">Greška: </string>
+    <string name="ai_typing">AI piše...</string>
+    <string name="ai_recipe_not_available">Recept nije dostupan.</string>
+    <string name="error_loading">Greška pri učitavanju recepta.</string>
+    <string name="ai_failed_response">Neuspješan AI odgovor.</string>
+
+
 
 </resources>

@@ -1,24 +1,16 @@
 package com.example.cookbook.viewmodel;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.cookbook.data.RecipeRepository;
 import com.example.cookbook.model.Recipe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 public class RecipeViewModel extends ViewModel {
     private final RecipeRepository recipeRepository;
-    private final MutableLiveData<String> searchQuery = new MutableLiveData<>("");
-    private final MutableLiveData<List<Recipe>> searchResults = new MutableLiveData<>();
     private final MediatorLiveData<List<Recipe>> ingredientSearchResults = new MediatorLiveData<>();
     private LiveData<List<Recipe>> currentSearchSource;
 
@@ -26,16 +18,8 @@ public class RecipeViewModel extends ViewModel {
         this.recipeRepository = repository;
     }
 
-    public LiveData<List<Recipe>> getSearchResults() {
-        return recipeRepository.searchRecipes(searchQuery.getValue() == null ? "" : searchQuery.getValue());
-    }
-
     public LiveData<List<Recipe>> getIngredientSearchResults() {
         return ingredientSearchResults;
-    }
-
-    public void setSearchQuery(String query) {
-        searchQuery.setValue(query);
     }
 
     public void searchRecipesByIngredients(String availableIngredients, String missingIngredients) {
@@ -70,22 +54,21 @@ public class RecipeViewModel extends ViewModel {
         }
     }
 
-    public void toggleFavorite(Recipe recipe) {
-        boolean newStatus = !recipe.isFavorite;
-        recipeRepository.updateFavoriteStatus(recipe.id, newStatus);
-
-    }
-
-    public LiveData<List<Recipe>> getSortedRecipes(String kriterij) {
-        switch (kriterij) {
-            case "name_asc": return recipeRepository.getRecipesByNameAsc();
-            case "name_desc": return recipeRepository.getRecipesByNameDesc();
+    public LiveData<List<Recipe>> getSortedRecipes(String key) {
+        switch (key) {
+            case "name_en_asc": return recipeRepository.getRecipesByNameAsc();
+            case "name_en_desc": return recipeRepository.getRecipesByNameDesc();
+            case "name_bs_asc": return recipeRepository.getRecipesByNameAscBs();
+            case "name_bs_desc": return recipeRepository.getRecipesByNameDescBs();
+            case "category_en": return recipeRepository.getRecipesByCategory();
+            case "category_bs": return recipeRepository.getRecipesByCategoryBs();
             case "calories": return recipeRepository.getRecipesByCalories();
             case "rating": return recipeRepository.getRecipesByRating();
-            case "category": return recipeRepository.getRecipesByCategory();
             default: return recipeRepository.getAllRecipes();
         }
     }
+
+
 
 
 

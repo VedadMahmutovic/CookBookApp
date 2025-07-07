@@ -1,13 +1,10 @@
 package com.example.cookbook;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -17,8 +14,6 @@ import com.example.cookbook.utils.LocaleHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-
-import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -43,21 +38,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerButton.setOnClickListener(v -> registerUser());
 
-        FrameLayout overlayContainer = findViewById(R.id.decorOverlayContainer);
-        View decorView = getLayoutInflater().inflate(R.layout.layout_decor_sipaj, overlayContainer, false);
-        overlayContainer.addView(decorView);
-
         ImageView flagBosnia = findViewById(R.id.flag_bosnia);
         ImageView flagUSA = findViewById(R.id.flag_usa);
 
         flagBosnia.setOnClickListener(v -> {
             LocaleHelper.setLocale(this, "bs");
-            recreate(); // reload UI
+            recreate();
         });
 
         flagUSA.setOnClickListener(v -> {
             LocaleHelper.setLocale(this, "en");
-            recreate(); // reload UI
+            recreate();
         });
 
     }
@@ -121,14 +112,5 @@ public class RegisterActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase));
     }
-
-    public static Context setLocale(Context context, String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.setLocale(locale);
-        return context.createConfigurationContext(config);
-    }
-
 
 }

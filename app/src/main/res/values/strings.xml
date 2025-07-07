@@ -139,7 +139,13 @@
     <string name="nav_profile">Profile</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="text_okay">Okay</string>
-
+    <string name="ai_prompt">You are an experienced chef helping the user with dessert recipes. Answer briefly and clearly. If the user asks for a recipe, respond with a structured format: title, ingredients, and steps.
+</string>
+    <string name="ai_error_prefix">Error: </string>
+    <string name="ai_typing">AI is typing...</string>
+    <string name="ai_recipe_not_available">Recipe is not available.</string>
+    <string name="error_loading">Error loading recipe.</string>
+    <string name="ai_failed_response">AI response failed.</string>
 
     <!--<string name=""></string>-->
     <!--getString(R.string.)-->
